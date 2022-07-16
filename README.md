@@ -15,7 +15,7 @@ The program can:
 
 ## О проекте
 
-Этот проект - небольшое RESTful приложение на Spring Boot.
+Этот проект - RESTful приложение на Spring Boot.
 В приложении реализованы CRUD (Create, Read, Update, Delete) операции над клиентами.
 
 Программа может:
