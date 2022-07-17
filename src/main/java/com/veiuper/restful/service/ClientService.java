@@ -30,11 +30,10 @@ public interface ClientService {
     /**
      * Updates the client with the specified ID, according to the transmitted client
      * @param client the client according to which the data needs to be updated
-     * @param id ID of the client to update
      *
      * @return {@code true} if the data has been updated, otherwise {@code false}
      */
-    boolean update(Client client, long id);
+    boolean update(Client client);
 
     /**
      * Deletes a client with the specified ID

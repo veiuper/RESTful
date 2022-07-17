@@ -38,9 +38,9 @@ public class ClientController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping(value = "/clients/{id}")
-    public ResponseEntity<?> update(@PathVariable(name = "id") long id, @RequestBody Client client) {
-        final boolean updated = clientService.update(client, id);
+    @PutMapping(value = "/clients")
+    public ResponseEntity<?> update(@RequestBody Client client) {
+        final boolean updated = clientService.update(client);
         return updated ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 

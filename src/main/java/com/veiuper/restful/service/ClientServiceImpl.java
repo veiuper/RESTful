@@ -31,8 +31,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean update(Client client, long id) {
-        return crudInMemoryRepository.save(client, id);
+    public boolean update(Client client) {
+        return crudInMemoryRepository.update(client);
     }
 
     @Override

@@ -4,12 +4,13 @@ import com.veiuper.restful.model.Client;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class ClientRepositoryImpl implements CrudInMemoryRepository<Client> {
+public class ClientRepository implements CrudInMemoryRepository<Client> {
     // Customer Storage
-    private static final Map<Long, Client> CLIENT_REPOSITORY_MAP = new HashMap<>();
+    private static final ConcurrentHashMap<Long, Client> CLIENT_REPOSITORY_MAP = new ConcurrentHashMap<>();
     // Variable for generating the client ID
     private static final AtomicLong CLIENT_ID_HOLDER = new AtomicLong();
 
@@ -21,10 +22,9 @@ public class ClientRepositoryImpl implements CrudInMemoryRepository<Client> {
     }
 
     @Override
-    public boolean save(Client client, long id) {
-        if (CLIENT_REPOSITORY_MAP.containsKey(id)) {
-            client.setId(id);
-            CLIENT_REPOSITORY_MAP.put(id, client);
+    public boolean update(Client client) {
+        if (CLIENT_REPOSITORY_MAP.containsKey(client.getId())) {
+            CLIENT_REPOSITORY_MAP.put(client.getId(), client);
             return true;
         }
         return false;

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface CrudInMemoryRepository<T> {
     void save(T t);
-    boolean save(T t, long id);
+    boolean update(T t);
     List<T> findAll();
     Optional<T> findById(long id);
     boolean deleteById(long id);
