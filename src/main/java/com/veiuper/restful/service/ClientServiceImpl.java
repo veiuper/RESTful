@@ -1,55 +1,42 @@
 package com.veiuper.restful.service;
 
 import com.veiuper.restful.model.Client;
+import com.veiuper.restful.repository.CrudInMemoryRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientServiceImpl implements ClientService {
-    // Customer Storage
-    private static final Map<Long, Client> CLIENT_REPOSITORY_MAP = new HashMap<>();
-    // Variable for generating the client ID
-    private static final AtomicLong CLIENT_ID_HOLDER = new AtomicLong();
+    private final CrudInMemoryRepository<Client> crudInMemoryRepository;
+
+    public ClientServiceImpl(CrudInMemoryRepository<Client> crudInMemoryRepository) {
+        this.crudInMemoryRepository = crudInMemoryRepository;
+    }
 
     @Override
     public void create(Client client) {
-        final long clientId = CLIENT_ID_HOLDER.getAndIncrement();
-        client.setId(clientId);
-        CLIENT_REPOSITORY_MAP.put(clientId, client);
+        crudInMemoryRepository.save(client);
     }
 
     @Override
     public List<Client> readAll() {
-        return new ArrayList<>(CLIENT_REPOSITORY_MAP.values());
+        return crudInMemoryRepository.findAll();
     }
 
     @Override
     public Optional<Client> read(long id) {
-        Client client = CLIENT_REPOSITORY_MAP.get(id);
-        if (client == null) {
-            return Optional.empty();
-        }
-        return Optional.of(client);
+        return crudInMemoryRepository.findById(id);
     }
 
     @Override
     public boolean update(Client client, long id) {
-        if (CLIENT_REPOSITORY_MAP.containsKey(id)) {
-            client.setId(id);
-            CLIENT_REPOSITORY_MAP.put(id, client);
-            return true;
-        }
-        return false;
+        return crudInMemoryRepository.save(client, id);
     }
 
     @Override
     public boolean delete(long id) {
-        if (CLIENT_REPOSITORY_MAP.containsKey(id)) {
-            CLIENT_REPOSITORY_MAP.remove(id);
-            return true;
-        }
-        return false;
+        return crudInMemoryRepository.deleteById(id);
     }
 }
